@@ -5,10 +5,18 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     public float speed = 1;
+
     public float jumpForce = 1;
+    public float jumpAmount = 2;
+
+    private float jumpAmountStored;
+    private bool canJump = true;
+
     private Rigidbody2D playerRB;
+
     void Start()
     {
+        jumpAmountStored = jumpAmount;
         playerRB = GetComponent<Rigidbody2D>();
     }
 
@@ -25,10 +33,33 @@ public class PlayerMovementController : MonoBehaviour
             playableCharacterScale.x = -1;
             transform.position += Vector3.left * speed * Time.deltaTime;
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+
+        if(Input.GetKeyDown(KeyCode.Space) && jumpAmountStored > 1)
         {
             playerRB.velocity = Vector3.up * jumpForce;
+            jumpAmountStored--;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && canJump && jumpAmountStored <= 1)
+        {
+            playerRB.velocity = Vector3.up * jumpForce;
+            jumpAmountStored = jumpAmount;
         }
         transform.localScale = playableCharacterScale;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            canJump = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            canJump = false;
+        }
     }
 }

@@ -8,6 +8,8 @@ TagManager:
   - Collectible
   - Destructible
   - weaponDamage
+  - HealingItem
+  - Floor
   layers:
   - Default
   - TransparentFX
