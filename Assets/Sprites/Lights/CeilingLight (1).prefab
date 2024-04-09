@@ -226,7 +226,7 @@ MonoBehaviour:
   - {x: 0.6666667, y: -0.33333325, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -108288
+  m_InstanceId: -28208
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.66666675, y: 0.33333325, z: 0}
@@ -370,7 +370,7 @@ MonoBehaviour:
   - {x: 0.09375, y: -1, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -108534
+  m_InstanceId: -28200
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.09375, y: 0.9999999, z: 0}
@@ -385,7 +385,6 @@ GameObject:
   - component: {fileID: 6192772665414962183}
   - component: {fileID: 3944381593399970941}
   - component: {fileID: 7616529782579859134}
-  - component: {fileID: 8334963784523367754}
   m_Layer: 0
   m_Name: LightChainAnchor
   m_TagString: Untagged
@@ -461,24 +460,3 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 8.413292
     m_UpperAngle: 170.58968
---- !u!231 &8334963784523367754
-SpringJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8872017987783305092}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 1606529082844442502}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 1
-  m_Distance: 0.9400002
-  m_DampingRatio: 0
-  m_Frequency: 1
