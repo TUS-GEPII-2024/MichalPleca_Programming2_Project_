@@ -6,7 +6,12 @@ public class doorOpenScript : MonoBehaviour
 {
     public bool autoClose = true;
     public float autoCloseTimer = 2;
-    public Animator doorAnimator;
+
+    public GameObject unloadRoom;
+    public GameObject loadRoom;
+
+    private Animator doorAnimator;
+    private bool playerInDoor;
     void Start()
     {
         doorAnimator = GetComponent<Animator>();
@@ -14,12 +19,7 @@ public class doorOpenScript : MonoBehaviour
 
     void Update()
     {
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        if (Input.GetKeyDown(KeyCode.W) && playerInDoor)
         {
             if(autoClose)
             {
@@ -32,10 +32,23 @@ public class doorOpenScript : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        playerInDoor = true;
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        playerInDoor = false;
+    }
+
     IEnumerator doorOpenClose()
     {
         doorAnimator.SetTrigger("doorOpen");
         yield return new WaitForSeconds(autoCloseTimer);
+        unloadRoom.SetActive(false);
+        loadRoom.SetActive(true);
         doorAnimator.SetTrigger("doorOpen");
     }
 }
