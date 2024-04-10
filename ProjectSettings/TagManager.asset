@@ -10,6 +10,7 @@ TagManager:
   - weaponDamage
   - HealingItem
   - Floor
+  - MegaDamageDealer
   layers:
   - Default
   - TransparentFX

@@ -121,8 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoClose: 1
-  autoCloseTimer: 2
-  doorAnimator: {fileID: 0}
+  autoCloseTimer: 1
+  unloadRoom: {fileID: 0}
+  loadRoom: {fileID: 0}
+  playerMovement: {fileID: 0}
 --- !u!61 &3479435418341549121
 BoxCollider2D:
   m_ObjectHideFlags: 0

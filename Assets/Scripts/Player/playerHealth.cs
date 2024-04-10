@@ -6,8 +6,12 @@ using TMPro;
 public class playerHealth : MonoBehaviour
 {
     public int health = 5;
+
     public float damageCooldown = 1;
     public bool canTakeDamage = true;
+
+    public float megaDamageCooldown = 0.75f;
+    public bool canTakeMegaDamage = true;
 
     public float healingCooldown = 1;
 
@@ -27,6 +31,12 @@ public class playerHealth : MonoBehaviour
         {
             StartCoroutine(takeDamage());
         }
+        else if (collision.gameObject.CompareTag("MegaDamageDealer") && canTakeMegaDamage)
+        {
+            StartCoroutine(takeMegaDamage());
+        }
+
+
         if (collision.gameObject.CompareTag("HealingItem") && canTakeDamage)
         {
             Destroy(collision.gameObject);
@@ -48,5 +58,13 @@ public class playerHealth : MonoBehaviour
         health--;
         yield return new WaitForSeconds(damageCooldown);
         canTakeDamage = true;
+    }
+
+    IEnumerator takeMegaDamage()
+    {
+        canTakeMegaDamage = false;
+        health -= 2;
+        yield return new WaitForSeconds(megaDamageCooldown);
+        canTakeMegaDamage = true;
     }
 }

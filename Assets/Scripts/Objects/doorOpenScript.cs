@@ -5,15 +5,20 @@ using UnityEngine;
 public class doorOpenScript : MonoBehaviour
 {
     public bool autoClose = true;
-    public float autoCloseTimer = 2;
+    public float autoCloseTimer = 1.5f;
 
     public GameObject unloadRoom;
     public GameObject loadRoom;
+
+    public PlayerMovementController playerMovement;
+    private float playerMovementSpeed;
 
     private Animator doorAnimator;
     private bool playerInDoor;
     void Start()
     {
+        playerMovement = GameObject.FindObjectOfType<PlayerMovementController>();
+        playerMovementSpeed = playerMovement.speed;
         doorAnimator = GetComponent<Animator>();
     }
 
@@ -34,21 +39,28 @@ public class doorOpenScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        playerInDoor = true;
-
+        if (collision.gameObject.tag == "Player")
+        { 
+            playerInDoor = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        playerInDoor = false;
+        if (collision.gameObject.tag == "Player")
+        {
+            playerInDoor = false;
+        }
     }
 
     IEnumerator doorOpenClose()
     {
         doorAnimator.SetTrigger("doorOpen");
+        playerMovement.speed = 0;
         yield return new WaitForSeconds(autoCloseTimer);
+        doorAnimator.SetTrigger("doorOpen");
+        playerMovement.speed = playerMovementSpeed;
         unloadRoom.SetActive(false);
         loadRoom.SetActive(true);
-        doorAnimator.SetTrigger("doorOpen");
     }
 }
