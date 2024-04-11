@@ -11,6 +11,7 @@ TagManager:
   - HealingItem
   - Floor
   - MegaDamageDealer
+  - Bullet
   layers:
   - Default
   - TransparentFX
