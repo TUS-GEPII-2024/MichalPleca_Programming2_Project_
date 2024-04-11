@@ -12,6 +12,7 @@ public class doorOpenScript : MonoBehaviour
 
     public PlayerMovementController playerMovement;
     private float playerMovementSpeed;
+    private float playerJumpForce;
 
     private Animator doorAnimator;
     private bool playerInDoor;
@@ -19,6 +20,8 @@ public class doorOpenScript : MonoBehaviour
     {
         playerMovement = GameObject.FindObjectOfType<PlayerMovementController>();
         playerMovementSpeed = playerMovement.speed;
+        playerJumpForce = playerMovement.jumpForce;
+
         doorAnimator = GetComponent<Animator>();
     }
 
@@ -57,8 +60,10 @@ public class doorOpenScript : MonoBehaviour
     {
         doorAnimator.SetTrigger("doorOpen");
         playerMovement.speed = 0;
+        playerMovement.jumpForce = 0;
         yield return new WaitForSeconds(autoCloseTimer);
         doorAnimator.SetTrigger("doorOpen");
+        playerMovement.jumpForce = playerJumpForce;
         playerMovement.speed = playerMovementSpeed;
         unloadRoom.SetActive(false);
         loadRoom.SetActive(true);

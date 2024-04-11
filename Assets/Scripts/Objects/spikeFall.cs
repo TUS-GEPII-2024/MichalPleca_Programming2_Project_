@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class spikeFall : MonoBehaviour
 {
-    
+    public float fallSpeed = 1f;
     void Start()
     {
         
@@ -13,6 +13,6 @@ public class spikeFall : MonoBehaviour
     
     void Update()
     {
-        
+        transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
     }
 }
