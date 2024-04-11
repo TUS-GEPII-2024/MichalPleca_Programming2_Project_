@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class spikeFall : MonoBehaviour
 {
-    public float fallSpeed = 1f;
+    public float fallSpeed = 10f;
     void Start()
     {
         
