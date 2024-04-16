@@ -12,6 +12,7 @@ TagManager:
   - Floor
   - MegaDamageDealer
   - Bullet
+  - BoneCollectible
   layers:
   - Default
   - TransparentFX

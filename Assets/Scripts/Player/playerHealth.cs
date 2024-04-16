@@ -8,8 +8,6 @@ public class playerHealth : MonoBehaviour
     public int health = 4;
     public int maxHealth = 5;
 
-    public bool canHeal = true;
-
     public float damageCooldown = 1;
     public bool canTakeDamage = true;
 
@@ -39,16 +37,7 @@ public class playerHealth : MonoBehaviour
             StartCoroutine(takeMegaDamage());
         }
 
-        if(maxHealth >= 5)
-        {
-            canHeal = false;
-        }
-        else if (maxHealth < 5)
-        {
-            canHeal = true;
-        }
-
-        if (collision.gameObject.CompareTag("HealingItem") && canHeal)
+        if (collision.gameObject.CompareTag("HealingItem") && health < maxHealth)
         {
             Destroy(collision.gameObject);
             StartCoroutine(healing());

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,12 @@ public class UpgradeMenu : MonoBehaviour
     public Canvas pauseMenuUI;
     public Canvas playerHUD;
     public Canvas upgradeUI;
+
+    public playerHealth playerHealth;
+    public playerAttack playerAttack;
+    public PlayerMovementController playerMovementController;
+    
+    public playerCollectibles playerCollectibles;
 
     void Start()
     {
@@ -45,8 +52,13 @@ public class UpgradeMenu : MonoBehaviour
         upgradeUI.enabled = false;
     }
 
-    public void upgrade()
+    public void maxHealthUpgrade()
     {
-        
+        if (playerCollectibles.boneCount >= 2)
+        {
+            playerHealth.maxHealth++;
+            playerCollectibles.boneCount -= 2;
+            Debug.Log("max Health Upgrade Got");
+        }
     }
 }
