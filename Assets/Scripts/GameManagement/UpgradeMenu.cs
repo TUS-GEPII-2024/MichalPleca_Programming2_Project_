@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseGame : MonoBehaviour
+public class UpgradeMenu : MonoBehaviour
 {
     bool gamePaused = false;
     public Canvas pauseMenuUI;
@@ -11,16 +11,17 @@ public class PauseGame : MonoBehaviour
 
     void Start()
     {
-        upgradeUI.enabled = false;
+        pauseMenuUI.enabled = false;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) & !gamePaused)
+        if (Input.GetKeyDown(KeyCode.Tab) & !gamePaused)
         {
             pauseGame();
         }
-        else if(Input.GetKeyDown(KeyCode.Escape) & gamePaused)
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab) & gamePaused)
         {
             unpauseGame();
         }
@@ -30,9 +31,9 @@ public class PauseGame : MonoBehaviour
     {
         Time.timeScale = 0;
         gamePaused = true;
-        pauseMenuUI.enabled = true;
+        upgradeUI.enabled = true;
+        pauseMenuUI.enabled = false;
         playerHUD.enabled = false;
-        upgradeUI.enabled = false;
     }
 
     void unpauseGame()
@@ -40,12 +41,12 @@ public class PauseGame : MonoBehaviour
         Time.timeScale = 1;
         gamePaused = false;
         playerHUD.enabled = true;
-        pauseMenuUI.enabled= false;
-        upgradeUI.enabled= false;
+        pauseMenuUI.enabled = false;
+        upgradeUI.enabled = false;
     }
 
-    public void quitGame()
+    public void upgrade()
     {
-        Application.Quit();
+        
     }
 }
