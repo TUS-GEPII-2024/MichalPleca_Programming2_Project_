@@ -11,9 +11,11 @@ public class doorOpenScript : MonoBehaviour
     public GameObject loadRoom;
 
     public PlayerMovementController playerMovement;
+
     private float playerMovementSpeed;
     private float playerJumpForce;
 
+    private AudioSource doorOpenSound;
     private Animator doorAnimator;
     private bool playerInDoor;
     void Start()
@@ -23,6 +25,7 @@ public class doorOpenScript : MonoBehaviour
         playerJumpForce = playerMovement.jumpForce;
 
         doorAnimator = GetComponent<Animator>();
+        doorOpenSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -59,6 +62,7 @@ public class doorOpenScript : MonoBehaviour
     IEnumerator doorOpenClose()
     {
         doorAnimator.SetTrigger("doorOpen");
+        doorOpenSound.Play();
         playerMovement.speed = 0;
         playerMovement.jumpForce = 0;
         yield return new WaitForSeconds(autoCloseTimer);

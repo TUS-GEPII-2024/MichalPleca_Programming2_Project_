@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerAttack : MonoBehaviour
 {
+    public static playerAttack instance;
+
     public GameObject meleePrefab;
     public GameObject rangedPrefab;
 
@@ -15,28 +17,55 @@ public class playerAttack : MonoBehaviour
     public float meleeCooldownTime = 0.75f;
     public float rangedCooldownTime = 0.75f;
 
+    public bool playerHasGun = false;
+
     private bool meleeOnCooldown;
     private bool rangedOnCooldown;
     private bool facingRight = true;
 
+    private void Start()
+    {
+        instance = this;
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !meleeOnCooldown || Input.GetKeyDown(KeyCode.RightShift) && !meleeOnCooldown)
+        float horizontalInput = Input.GetAxis("Horizontal");
+        if (playerHasGun)
         {
-            StartCoroutine(meleeAttack());
-        }
-        if (Input.GetKey(KeyCode.Mouse0) && !rangedOnCooldown || Input.GetKey(KeyCode.RightControl) && !rangedOnCooldown)
-        {
-            StartCoroutine(rangedAttack());
-        }
+            if (Input.GetKeyDown(KeyCode.E) && !meleeOnCooldown || Input.GetKeyDown(KeyCode.RightShift) && !meleeOnCooldown)
+            {
+                StartCoroutine(meleeAttack());
+            }
+            if (Input.GetKey(KeyCode.Mouse0) && !rangedOnCooldown || Input.GetKey(KeyCode.RightControl) && !rangedOnCooldown)
+            {
+                StartCoroutine(rangedAttack());
+            }
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            facingRight = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            facingRight = true;
+
+            if (horizontalInput < 0)
+            {
+                facingRight = false;
+
+                Vector3 rangedScale = rangedPrefab.transform.localScale;
+                rangedScale.x = -1;
+                rangedPrefab.transform.localScale = rangedScale;
+
+                Vector3 meleeScale = meleePrefab.transform.localScale;
+                meleeScale.x = -1;
+                meleePrefab.transform.localScale = meleeScale;
+            }
+            else if (horizontalInput > 0)
+            {
+                facingRight = true;
+
+                Vector3 rangedScale = rangedPrefab.transform.localScale;
+                rangedScale.x = 1;
+                rangedPrefab.transform.localScale = rangedScale;
+
+                Vector3 meleeScale = meleePrefab.transform.localScale;
+                meleeScale.x = 1;
+                meleePrefab.transform.localScale = meleeScale;
+            }
         }
     }
 
@@ -44,16 +73,6 @@ public class playerAttack : MonoBehaviour
     {
         meleeOnCooldown = true;
         GameObject meleeProjectile = Instantiate(meleePrefab, transform.position, transform.rotation);
-        Vector3 meleeScale = meleeProjectile.transform.localScale;
-        if (facingRight)
-        {
-            meleeScale.x = -1;
-        }
-        else
-        {
-            meleeScale.x = 1;
-        }
-        meleeProjectile.transform.localScale = meleeScale;
         Destroy(meleeProjectile, meleeDestroyDelay);
         yield return new WaitForSeconds(meleeCooldownTime);
         meleeOnCooldown = false;
