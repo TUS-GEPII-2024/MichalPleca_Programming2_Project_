@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    public static PlayerMovementController instance;
     public float speed = 1;
 
     public float jumpForce = 1;
-    public float jumpAmount = 2;
+    public float jumpAmount = 1;
 
-    private float jumpAmountStored;
+    [HideInInspector]
+    public float jumpAmountStored;
     private bool canJump = true;
 
     private Rigidbody2D playerRB;
 
     void Start()
     {
+        instance = this;
         jumpAmountStored = jumpAmount;
         playerRB = GetComponent<Rigidbody2D>();
     }

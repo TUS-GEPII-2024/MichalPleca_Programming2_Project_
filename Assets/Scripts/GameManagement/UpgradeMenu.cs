@@ -15,7 +15,6 @@ public class UpgradeMenu : MonoBehaviour
     public PlayerMovementController playerMovementController;
     
     public playerCollectibles playerCollectibles;
-
     void Start()
     {
         pauseMenuUI.enabled = false;
@@ -54,11 +53,34 @@ public class UpgradeMenu : MonoBehaviour
 
     public void maxHealthUpgrade()
     {
+        if (playerHealth.maxHealth <= playerHealth.maxHealthStored + 2)
+        {
+            if (playerCollectibles.boneCount >= 2)
+            {
+                playerHealth.maxHealth++;
+                playerCollectibles.boneCount -= 2;
+                Debug.Log("max Health Upgrade Got");
+            }
+        }
+    }
+
+    public void walkSpeedUpgrade()
+    {
+        if (playerCollectibles.boneCount >= 3)
+        {
+            PlayerMovementController.instance.speed += 0.5f;
+            playerCollectibles.boneCount -= 3;
+            Debug.Log("walk Speed Upgrade Got");
+        }
+    }
+
+    public void doubleJumpUpgrade()
+    {
         if (playerCollectibles.boneCount >= 2)
         {
-            playerHealth.maxHealth++;
+            PlayerMovementController.instance.jumpAmountStored += 1;
             playerCollectibles.boneCount -= 2;
-            Debug.Log("max Health Upgrade Got");
+            Debug.Log("double Jump Upgrade Got");
         }
     }
 }

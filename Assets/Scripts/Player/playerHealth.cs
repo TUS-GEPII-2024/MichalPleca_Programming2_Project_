@@ -7,6 +7,8 @@ public class playerHealth : MonoBehaviour
 {
     public int health = 4;
     public int maxHealth = 5;
+    [HideInInspector]
+    public int maxHealthStored = 5;
 
     public float damageCooldown = 1;
     public bool canTakeDamage = true;
@@ -22,7 +24,7 @@ public class playerHealth : MonoBehaviour
     public TextMeshProUGUI healthCountText;
     void Start()
     {
-        
+        maxHealthStored = maxHealth;
     }
 
     void Update()
