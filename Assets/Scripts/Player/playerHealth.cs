@@ -16,6 +16,9 @@ public class playerHealth : MonoBehaviour
 
     public float healingCooldown = 1;
 
+    public AudioClip boozeGulpClip;
+    public AudioSource characterInteractionSFX;
+
     public TextMeshProUGUI healthCountText;
     void Start()
     {
@@ -47,6 +50,8 @@ public class playerHealth : MonoBehaviour
     IEnumerator healing()
     {
         canTakeDamage = false;
+        characterInteractionSFX.clip = boozeGulpClip;
+        characterInteractionSFX.Play();
         health++;
         yield return new WaitForSeconds(healingCooldown);
         canTakeDamage = true;
