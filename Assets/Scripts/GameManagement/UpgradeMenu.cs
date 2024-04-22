@@ -78,7 +78,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (playerCollectibles.boneCount >= 2)
         {
-            PlayerMovementController.instance.jumpAmountStored += 1;
+            PlayerMovementController.instance.jumpAmount += 1;
             playerCollectibles.boneCount -= 2;
             Debug.Log("double Jump Upgrade Got");
         }

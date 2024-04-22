@@ -17,9 +17,16 @@ public class glassBreakScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Bullet") || collision.CompareTag("playerFist"))
         {
-            glassAnimator.SetTrigger("glassBreak");
+            StartCoroutine(glassBreaking());
         }
+    }
+
+    IEnumerator glassBreaking()
+    {
+        glassAnimator.SetTrigger("glassBreak");
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
     }
 }
