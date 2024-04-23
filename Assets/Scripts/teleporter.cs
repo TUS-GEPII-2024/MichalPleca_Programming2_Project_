@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class teleporter : MonoBehaviour
 {
-    public Transform portal1;
-    public Transform portal2;
-    public Transform portal3; 
+    public Transform teleportPoint;
+    public ParticleSystem teleportPointParticles;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.position = teleportPoint.position;
+            teleportPointParticles.Play();
+        }
     }
 }

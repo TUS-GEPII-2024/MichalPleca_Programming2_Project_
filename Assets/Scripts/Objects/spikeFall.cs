@@ -6,14 +6,37 @@ using UnityEngine;
 public class spikeFall : MonoBehaviour
 {
     public float fallSpeed = 10f;
-    public GameObject spikeTransform;
+    public float destoryDelay = 1f;
+    public bool playerDetected = false;
+
+    private GameObject spikeGameObject;
+    private Transform spikeTransform;
     void Start()
     {
-        spikeTransform = transform.parent.gameObject;
+        spikeGameObject = gameObject.transform.parent.gameObject;
+        spikeTransform = transform.parent;
     }
 
     void Update()
     {
-        transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+        if (playerDetected)
+        {
+            StartCoroutine(spikeFallDestroy());
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerDetected = true;
+        }
+    }
+
+    IEnumerator spikeFallDestroy()
+    {
+        spikeTransform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+        yield return new WaitForSeconds(destoryDelay);
+        GameObject.Destroy(spikeGameObject);
     }
 }

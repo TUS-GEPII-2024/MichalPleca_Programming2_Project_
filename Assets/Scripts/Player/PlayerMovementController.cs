@@ -9,13 +9,11 @@ public class PlayerMovementController : MonoBehaviour
 
     public float jumpForce = 1;
     public float jumpAmount = 1;
-
     [HideInInspector]
     public float jumpAmountStored;
     private bool canJump = true;
 
     private Rigidbody2D playerRB;
-
     void Start()
     {
         instance = this;

@@ -26,7 +26,7 @@ public class glassBreakScript : MonoBehaviour
     IEnumerator glassBreaking()
     {
         glassAnimator.SetTrigger("glassBreak");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         Destroy(gameObject);
     }
 }
