@@ -10,20 +10,11 @@ public class doorOpenScript : MonoBehaviour
     public GameObject unloadRoom;
     public GameObject loadRoom;
 
-    public PlayerMovementController playerMovement;
-
-    private float playerMovementSpeed;
-    private float playerJumpForce;
-
     private AudioSource doorOpenSound;
     private Animator doorAnimator;
     private bool playerInDoor;
     void Start()
     {
-        playerMovement = GameObject.FindObjectOfType<PlayerMovementController>();
-        playerMovementSpeed = playerMovement.speed;
-        playerJumpForce = playerMovement.jumpForce;
-
         doorAnimator = GetComponent<Animator>();
         doorOpenSound = GetComponent<AudioSource>();
     }
@@ -63,12 +54,10 @@ public class doorOpenScript : MonoBehaviour
     {
         doorAnimator.SetTrigger("doorOpen");
         doorOpenSound.Play();
-        playerMovement.speed = 0;
-        playerMovement.jumpForce = 0;
+        PlayerMovementController.instance.isInputEnabled = false;
         yield return new WaitForSeconds(autoCloseTimer);
         doorAnimator.SetTrigger("doorOpen");
-        playerMovement.jumpForce = playerJumpForce;
-        playerMovement.speed = playerMovementSpeed;
+        PlayerMovementController.instance.isInputEnabled = true;
         unloadRoom.SetActive(false);
         loadRoom.SetActive(true);
     }
