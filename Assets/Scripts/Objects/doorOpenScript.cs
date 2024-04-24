@@ -55,7 +55,9 @@ public class doorOpenScript : MonoBehaviour
         doorAnimator.SetTrigger("doorOpen");
         doorOpenSound.Play();
         PlayerMovementController.instance.isInputEnabled = false;
+
         yield return new WaitForSeconds(autoCloseTimer);
+
         doorAnimator.SetTrigger("doorOpen");
         PlayerMovementController.instance.isInputEnabled = true;
         unloadRoom.SetActive(false);

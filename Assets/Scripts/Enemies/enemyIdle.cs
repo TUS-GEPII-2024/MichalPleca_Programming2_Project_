@@ -7,6 +7,9 @@ public class enemyIdle : MonoBehaviour
     [SerializeField]
     private bool playerDetected = false;
     private Transform enemyTransform;
+    public Animator enemyAnimator;
+    public enemyHealth enemyHealth;
+    public CircleCollider2D playerDetectionCollider;
 
     public float enemySpeed = 1f;
     void Start()
@@ -28,6 +31,13 @@ public class enemyIdle : MonoBehaviour
             {
                 enemyTransform.localScale = new Vector3(1, 1, 1);
             }
+
+            enemyAnimator.SetBool("playerDetected", true);
+        }
+
+        if(enemyHealth.enemyDead == true)
+        {
+            playerDetected = false;
         }
     }
 
@@ -36,6 +46,7 @@ public class enemyIdle : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerDetected = true;
+            playerDetectionCollider.enabled = false;
         }
     }
 }
