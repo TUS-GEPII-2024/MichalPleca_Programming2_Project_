@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     public static PlayerMovementController instance;
-    private Rigidbody2D playerRB;
+    [HideInInspector] public Rigidbody2D playerRB;
     private LayerMask raycastLayerMask;
 
     [HideInInspector] public bool isInputEnabled;
@@ -18,6 +18,7 @@ public class PlayerMovementController : MonoBehaviour
     public float jumpAmount = 1;
     [HideInInspector] public float jumpAmountStored;
 
+    public ParticleSystem walkParticles;
     void Start()
     {
         raycastLayerMask = LayerMask.GetMask("FloorForRaycast");
@@ -74,22 +75,40 @@ public class PlayerMovementController : MonoBehaviour
     {
         Vector2 playableCharacterScale = transform.localScale;
 
+        //gets horizontal input, then multiplies that by the speed variable
         float horizontalMovement = Input.GetAxis("Horizontal") * speed;
 
+        //speed variable is already attached to the horizontal input
+        //below sets newVelocity.x to the horizontal input, which is basically the speed and direction
+        //the player velocity is then set to the newVelocity velocity
         Vector2 newVelocity;
         newVelocity.x = horizontalMovement;
         newVelocity.y = playerRB.velocity.y;
         playerRB.velocity = newVelocity;
 
+        
+
         if (Input.GetKey(KeyCode.D))
         {
+            if (canJump)
+            {
+                walkParticles.Play();
+            }
+            
             playableCharacterScale.x = 1;
-            //transform.position += Vector3.right * speed * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.A))
         {
+            if (canJump)
+            {
+                walkParticles.Play();
+            }
+
             playableCharacterScale.x = -1;
-            //transform.position += Vector3.left * speed * Time.deltaTime;
+        }
+        else
+        {
+            walkParticles.Stop();
         }
         transform.localScale = playableCharacterScale;
     }

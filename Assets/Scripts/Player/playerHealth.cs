@@ -16,14 +16,17 @@ public class playerHealth : MonoBehaviour
     public float megaDamageCooldown = 0.75f;
     public bool canTakeMegaDamage = true;
 
+    public Vector2 hurtRecoil;
+
     public float healingCooldown = 1;
 
     public AudioClip boozeGulpClip;
-    public AudioSource characterInteractionSFX;
+    private AudioSource characterInteractionSFX;
 
     public TextMeshProUGUI healthCountText;
     void Start()
     {
+        characterInteractionSFX = GetComponent<AudioSource>();
         maxHealthStored = maxHealth;
     }
 
@@ -63,6 +66,18 @@ public class playerHealth : MonoBehaviour
     {
         canTakeDamage = false;
         health--;
+
+        PlayerMovementController.instance.enabled = false;
+
+        Vector2 recoilForce;
+        recoilForce.x = -transform.localScale.x * hurtRecoil.x;
+        recoilForce.y = hurtRecoil.y;
+        PlayerMovementController.instance.playerRB.AddForce(recoilForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.5f);
+
+        PlayerMovementController.instance.enabled = true;
+
         yield return new WaitForSeconds(damageCooldown);
         canTakeDamage = true;
     }
@@ -71,6 +86,18 @@ public class playerHealth : MonoBehaviour
     {
         canTakeMegaDamage = false;
         health -= 2;
+
+        PlayerMovementController.instance.enabled = false;
+
+        Vector2 recoilForce;
+        recoilForce.x = -transform.localScale.x * hurtRecoil.x;
+        recoilForce.y = hurtRecoil.y;
+        PlayerMovementController.instance.playerRB.AddForce(recoilForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.75f);
+
+        PlayerMovementController.instance.enabled = true;
+
         yield return new WaitForSeconds(megaDamageCooldown);
         canTakeMegaDamage = true;
     }
