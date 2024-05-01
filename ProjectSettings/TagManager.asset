@@ -64,6 +64,9 @@ TagManager:
   - name: Player
     uniqueID: 2085034891
     locked: 0
+  - name: Bone
+    uniqueID: 2070947979
+    locked: 0
   - name: Lights
     uniqueID: 4205551611
     locked: 0

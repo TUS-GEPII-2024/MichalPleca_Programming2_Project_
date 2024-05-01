@@ -5,14 +5,13 @@ using UnityEngine;
 public class glassBreakScript : MonoBehaviour
 {
     public Animator glassAnimator;
+    private AudioSource glassAudioSource;
+    private BoxCollider2D glassCollider;
     void Start()
     {
         glassAnimator = GetComponent<Animator>();
-    }
-
-    void Update()
-    {
-        
+        glassAudioSource = GetComponent<AudioSource>();
+        glassCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,7 +25,9 @@ public class glassBreakScript : MonoBehaviour
     IEnumerator glassBreaking()
     {
         glassAnimator.SetTrigger("glassBreak");
-        yield return new WaitForSeconds(1);
+        glassAudioSource.Play();
+        glassCollider.enabled = false;
+        yield return new WaitForSeconds(4);
         Destroy(gameObject);
     }
 }

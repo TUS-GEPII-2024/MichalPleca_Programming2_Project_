@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -21,11 +22,16 @@ public class PlayerMovementController : MonoBehaviour
     public ParticleSystem walkParticles;
     [HideInInspector] public Animator playerAnimator;
 
+    private AudioSource walkSound;
+    private bool walkSoundPlay;
+
+    private ShadowCaster2D shadowCaster;
     private BoxCollider2D standingCollider;
     private CapsuleCollider2D crouchCollider;
     private bool crouching;
     void Start()
     {
+        walkSoundPlay = false;
         crouching = false;
         raycastLayerMask = LayerMask.GetMask("FloorForRaycast");
         isInputEnabled = true;
@@ -35,6 +41,8 @@ public class PlayerMovementController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         standingCollider = GetComponent<BoxCollider2D>();
         crouchCollider = GetComponent<CapsuleCollider2D>();
+        shadowCaster = GetComponent<ShadowCaster2D>();
+        walkSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -58,6 +66,7 @@ public class PlayerMovementController : MonoBehaviour
             canJump = false;
             standingCollider.enabled = false;
             crouchCollider.enabled = true;
+            shadowCaster.enabled = false;
             crouching = true;
             playerAnimator.SetBool("characterCrouch", true);
         }
@@ -66,6 +75,7 @@ public class PlayerMovementController : MonoBehaviour
             canJump = true;
             standingCollider.enabled = true;
             crouchCollider.enabled = false;
+            shadowCaster.enabled = true;
             crouching = false;
             playerAnimator.SetBool("characterCrouchIdle", false);
             playerAnimator.SetBool("characterCrouch", false);
@@ -83,21 +93,22 @@ public class PlayerMovementController : MonoBehaviour
 
     private void jump()
     {
+
+        RaycastHit2D groundDetect = Physics2D.Raycast(transform.position, -Vector2.up, 1.5f, raycastLayerMask);
+        Debug.DrawRay(transform.position, -Vector2.up * 1.5f, Color.red, 5);
+        if (groundDetect.collider == null)
+        {
+            Debug.Log("Raycast DID NOT hit something");
+            canJump = false;
+        }
+        else
+        {
+            Debug.Log("Raycast hit something");
+            canJump = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            RaycastHit2D groundDetect = Physics2D.Raycast(transform.position, -Vector2.up, 1.5f, raycastLayerMask);
-            Debug.DrawRay(transform.position, -Vector2.up * 1.5f, Color.red, 5);
-            if (groundDetect.collider == null)
-            {
-                Debug.Log("Raycast DID NOT hit something");
-                canJump = false;
-            }
-            else
-            {
-                Debug.Log("Raycast hit something");
-                canJump = true;
-            }
-
             if (jumpAmountStored > 1 && !crouching)
             {
                 playerRB.velocity = Vector3.up * jumpForce;
@@ -134,6 +145,10 @@ public class PlayerMovementController : MonoBehaviour
             {
                 playerAnimator.SetBool("characterIdle", false);
                 walkParticles.Play();
+                if (!walkSoundPlay)
+                {
+                    StartCoroutine(playWalkSound());
+                }
             }
 
             playableCharacterScale.x = 1;
@@ -144,6 +159,10 @@ public class PlayerMovementController : MonoBehaviour
             {
                 playerAnimator.SetBool("characterIdle", false);
                 walkParticles.Play();
+                if (!walkSoundPlay)
+                {
+                    StartCoroutine(playWalkSound());
+                }
             }
 
             playableCharacterScale.x = -1;
@@ -152,8 +171,17 @@ public class PlayerMovementController : MonoBehaviour
         {
             playerAnimator.SetBool("characterIdle", true);
             walkParticles.Stop();
+            walkSound.Stop();
         }
         transform.localScale = playableCharacterScale;
+    }
+
+    IEnumerator playWalkSound()
+    {
+        walkSoundPlay = true;
+        walkSound.Play();
+        yield return new WaitForSeconds(0.45f);
+        walkSoundPlay = false;
     }
 }
 

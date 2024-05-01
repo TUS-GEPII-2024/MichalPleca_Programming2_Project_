@@ -21,12 +21,11 @@ public class playerHealth : MonoBehaviour
     public float healingCooldown = 1;
 
     public AudioClip boozeGulpClip;
-    private AudioSource characterInteractionSFX;
+    public AudioSource characterInteractionSFX;
 
     public TextMeshProUGUI healthCountText;
     void Start()
     {
-        characterInteractionSFX = GetComponent<AudioSource>();
         maxHealthStored = maxHealth;
     }
 

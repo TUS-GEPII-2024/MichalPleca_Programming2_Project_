@@ -1,51 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class enemyHealth : MonoBehaviour
 {
     public int health = 5;
-    public float damageCooldown = 0.25f;
-    public bool canTakeDamage = true;
-    public Animator enemyAnimator;
-
+    public float destroyDelay = 2;
+    
     public bool enemyDead = false;
-    void Start()
+
+    public GameObject deadCollider;
+    public AudioSource audioSource;
+
+    private Animator enemyAnimator;
+    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider;
+    private ShadowCaster2D shadowCaster;
+    private SpriteRenderer spriteRenderer;
+
+    private void Start()
     {
-        canTakeDamage = true;
+        enemyAnimator = GetComponent<Animator>();
+        shadowCaster = GetComponent<ShadowCaster2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
     {
-        if(health <= 0 || enemyDead)
+        if (health <= 0 || enemyDead)
         {
-            enemyAnimator.SetTrigger("enemyDead");
-            enemyDead = true;
+            StartCoroutine(enemyDeath());
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+        IEnumerator enemyDeath()
     {
-        if ((collision.gameObject.CompareTag("playerFist") || collision.gameObject.CompareTag("Player")) && canTakeDamage)
-        {
-            takeDamage();
-        }
-    }
+        audioSource.enabled = false;
+        shadowCaster.enabled = false;
+        capsuleCollider.enabled = false;
+        boxCollider.enabled = false;
+        deadCollider.SetActive(true);
+        enemyAnimator.SetTrigger("enemyDead");
+        enemyDead = true;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if ((collision.gameObject.CompareTag("playerFist") || collision.gameObject.CompareTag("Bullet")) && canTakeDamage)
-        {
-            takeDamage();
-        }
-    }
+        yield return new WaitForSeconds(destroyDelay);
 
-    IEnumerator takeDamage()
-    {
-        Debug.Log("enemy took damage");
-        canTakeDamage = false;
-        health--;
-        yield return new WaitForSeconds(damageCooldown);
-        canTakeDamage = true;
+        Destroy(gameObject);
     }
 }
