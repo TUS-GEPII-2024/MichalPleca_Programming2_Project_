@@ -19,13 +19,22 @@ public class PlayerMovementController : MonoBehaviour
     [HideInInspector] public float jumpAmountStored;
 
     public ParticleSystem walkParticles;
+    [HideInInspector] public Animator playerAnimator;
+
+    private BoxCollider2D standingCollider;
+    private CapsuleCollider2D crouchCollider;
+    private bool crouching;
     void Start()
     {
+        crouching = false;
         raycastLayerMask = LayerMask.GetMask("FloorForRaycast");
         isInputEnabled = true;
         instance = this;
         jumpAmountStored = jumpAmount;
         playerRB = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>();
+        standingCollider = GetComponent<BoxCollider2D>();
+        crouchCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void Update()
@@ -34,10 +43,41 @@ public class PlayerMovementController : MonoBehaviour
         {
             walk();
             jump();
+            crouch();
         }
         else if (!isInputEnabled)
         {
             playerRB.velocity = Vector3.zero;
+        }
+    }
+
+    private void crouch()
+    {
+        if (Input.GetKeyDown(KeyCode.S) && crouching == false)
+        {
+            canJump = false;
+            standingCollider.enabled = false;
+            crouchCollider.enabled = true;
+            crouching = true;
+            playerAnimator.SetBool("characterCrouch", true);
+        }
+        else if (Input.GetKeyDown(KeyCode.S) && crouching == true)
+        {
+            canJump = true;
+            standingCollider.enabled = true;
+            crouchCollider.enabled = false;
+            crouching = false;
+            playerAnimator.SetBool("characterCrouchIdle", false);
+            playerAnimator.SetBool("characterCrouch", false);
+        }
+
+        if (playerRB.velocity.y == 0 && crouching)
+        {
+            playerAnimator.SetBool("characterCrouchIdle", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("characterCrouchIdle", false);
         }
     }
 
@@ -58,12 +98,12 @@ public class PlayerMovementController : MonoBehaviour
                 canJump = true;
             }
 
-            if (jumpAmountStored > 1)
+            if (jumpAmountStored > 1 && !crouching)
             {
                 playerRB.velocity = Vector3.up * jumpForce;
                 jumpAmountStored--;
             }
-            else if (canJump && jumpAmountStored <= 1)
+            else if (canJump && jumpAmountStored <= 1 && !crouching)
             {
                 playerRB.velocity = Vector3.up * jumpForce;
                 jumpAmountStored = jumpAmount;
@@ -86,21 +126,23 @@ public class PlayerMovementController : MonoBehaviour
         newVelocity.y = playerRB.velocity.y;
         playerRB.velocity = newVelocity;
 
-        
+
 
         if (Input.GetKey(KeyCode.D))
         {
             if (canJump)
             {
+                playerAnimator.SetBool("characterIdle", false);
                 walkParticles.Play();
             }
-            
+
             playableCharacterScale.x = 1;
         }
         else if (Input.GetKey(KeyCode.A))
         {
             if (canJump)
             {
+                playerAnimator.SetBool("characterIdle", false);
                 walkParticles.Play();
             }
 
@@ -108,6 +150,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         else
         {
+            playerAnimator.SetBool("characterIdle", true);
             walkParticles.Stop();
         }
         transform.localScale = playableCharacterScale;

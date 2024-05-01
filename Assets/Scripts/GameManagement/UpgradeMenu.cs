@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeMenu : MonoBehaviour
 {
@@ -9,12 +10,15 @@ public class UpgradeMenu : MonoBehaviour
     public Canvas pauseMenuUI;
     public Canvas playerHUD;
     public Canvas upgradeUI;
+    public Image unavailableImage;
 
     public playerHealth playerHealth;
     public playerAttack playerAttack;
     public PlayerMovementController playerMovementController;
     
     public playerCollectibles playerCollectibles;
+
+    private bool doubleJumpGot = false;
     void Start()
     {
         pauseMenuUI.enabled = false;
@@ -55,7 +59,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (playerHealth.maxHealth <= playerHealth.maxHealthStored + 2)
         {
-            if (playerCollectibles.boneCount >= 2)
+            if (playerCollectibles.boneCount >= 2 && doubleJumpGot)
             {
                 playerHealth.maxHealth++;
                 playerCollectibles.boneCount -= 2;
@@ -66,7 +70,7 @@ public class UpgradeMenu : MonoBehaviour
 
     public void walkSpeedUpgrade()
     {
-        if (playerCollectibles.boneCount >= 3)
+        if (playerCollectibles.boneCount >= 3 && doubleJumpGot)
         {
             PlayerMovementController.instance.speed += 0.5f;
             playerCollectibles.boneCount -= 3;
@@ -76,8 +80,10 @@ public class UpgradeMenu : MonoBehaviour
 
     public void doubleJumpUpgrade()
     {
-        if (playerCollectibles.boneCount >= 2)
+        if (playerCollectibles.boneCount >= 2 && !doubleJumpGot)
         {
+            doubleJumpGot = true;
+            unavailableImage.enabled = false;
             PlayerMovementController.instance.jumpAmount += 1;
             playerCollectibles.boneCount -= 2;
             Debug.Log("double Jump Upgrade Got");
