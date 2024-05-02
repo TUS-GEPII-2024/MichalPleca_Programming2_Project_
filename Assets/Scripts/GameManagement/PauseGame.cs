@@ -14,15 +14,16 @@ public class PauseGame : MonoBehaviour
     void Start()
     {
         upgradeUI.enabled = false;
+        pauseMenuUI.enabled = false;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) & !gamePaused)
+        if(Input.GetKeyDown(KeyCode.Escape) && !gamePaused)
         {
             pauseGame();
         }
-        else if(Input.GetKeyDown(KeyCode.Escape) & gamePaused)
+        else if(Input.GetKeyDown(KeyCode.Escape) && gamePaused)
         {
             unpauseGame();
         }
@@ -53,6 +54,7 @@ public class PauseGame : MonoBehaviour
 
     public void restartLevel()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Hallway");
     }
 }

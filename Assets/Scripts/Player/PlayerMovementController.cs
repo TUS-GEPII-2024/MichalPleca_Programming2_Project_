@@ -9,6 +9,7 @@ public class PlayerMovementController : MonoBehaviour
     public static PlayerMovementController instance;
     [HideInInspector] public Rigidbody2D playerRB;
     private LayerMask raycastLayerMask;
+    private LayerMask ceilingLayerMask;
 
     [HideInInspector] public bool isInputEnabled;
     private bool canJump = true;
@@ -34,6 +35,7 @@ public class PlayerMovementController : MonoBehaviour
         walkSoundPlay = false;
         crouching = false;
         raycastLayerMask = LayerMask.GetMask("FloorForRaycast");
+        ceilingLayerMask = LayerMask.GetMask("CeilingForRaycast");
         isInputEnabled = true;
         instance = this;
         jumpAmountStored = jumpAmount;
@@ -61,6 +63,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private void crouch()
     {
+        RaycastHit2D ceilingDetect = Physics2D.Raycast(transform.position, -Vector2.down, 1, ceilingLayerMask);
+        //Debug.DrawRay(transform.position, -Vector2.down * 1, Color.blue, 5);
         if (Input.GetKeyDown(KeyCode.S) && crouching == false)
         {
             canJump = false;
@@ -70,7 +74,7 @@ public class PlayerMovementController : MonoBehaviour
             crouching = true;
             playerAnimator.SetBool("characterCrouch", true);
         }
-        else if (Input.GetKeyDown(KeyCode.S) && crouching == true)
+        else if (Input.GetKeyDown(KeyCode.S) && crouching == true && ceilingDetect.collider == null)
         {
             canJump = true;
             standingCollider.enabled = true;
@@ -95,15 +99,15 @@ public class PlayerMovementController : MonoBehaviour
     {
 
         RaycastHit2D groundDetect = Physics2D.Raycast(transform.position, -Vector2.up, 1.5f, raycastLayerMask);
-        Debug.DrawRay(transform.position, -Vector2.up * 1.5f, Color.red, 5);
+        //Debug.DrawRay(transform.position, -Vector2.up * 1.5f, Color.red, 5);
         if (groundDetect.collider == null)
         {
-            Debug.Log("Raycast DID NOT hit something");
+            //Debug.Log("Raycast DID NOT hit something");
             canJump = false;
         }
         else
         {
-            Debug.Log("Raycast hit something");
+            //Debug.Log("Raycast hit something");
             canJump = true;
         }
 
@@ -113,11 +117,13 @@ public class PlayerMovementController : MonoBehaviour
             {
                 playerRB.velocity = Vector3.up * jumpForce;
                 jumpAmountStored--;
+                walkParticles.Stop();
             }
             else if (canJump && jumpAmountStored <= 1 && !crouching)
             {
                 playerRB.velocity = Vector3.up * jumpForce;
                 jumpAmountStored = jumpAmount;
+                walkParticles.Stop();
             }
         }
     }

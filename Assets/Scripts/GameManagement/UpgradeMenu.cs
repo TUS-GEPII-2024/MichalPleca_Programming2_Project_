@@ -19,10 +19,6 @@ public class UpgradeMenu : MonoBehaviour
     public playerCollectibles playerCollectibles;
 
     private bool doubleJumpGot = false;
-    void Start()
-    {
-        pauseMenuUI.enabled = false;
-    }
 
     void Update()
     {
@@ -83,7 +79,7 @@ public class UpgradeMenu : MonoBehaviour
         {
             doubleJumpGot = true;
             unavailableImage.enabled = false;
-            PlayerMovementController.instance.jumpAmount += 1;
+            PlayerMovementController.instance.jumpAmount = 2;
             playerCollectibles.boneCount -= 2;
             Debug.Log("double Jump Upgrade Got");
         }
