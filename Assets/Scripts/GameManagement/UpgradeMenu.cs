@@ -22,7 +22,6 @@ public class UpgradeMenu : MonoBehaviour
     void Start()
     {
         pauseMenuUI.enabled = false;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

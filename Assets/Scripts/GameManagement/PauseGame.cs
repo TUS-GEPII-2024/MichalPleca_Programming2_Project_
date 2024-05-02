@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PauseGame : MonoBehaviour
     public Canvas pauseMenuUI;
     public Canvas playerHUD;
     public Canvas upgradeUI;
+    public Canvas deathUI;
 
     void Start()
     {
@@ -47,5 +49,10 @@ public class PauseGame : MonoBehaviour
     public void quitGame()
     {
         Application.Quit();
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene("Hallway");
     }
 }

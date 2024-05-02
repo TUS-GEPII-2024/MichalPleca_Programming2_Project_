@@ -7,8 +7,7 @@ public class playerHealth : MonoBehaviour
 {
     public int health = 4;
     public int maxHealth = 5;
-    [HideInInspector]
-    public int maxHealthStored = 5;
+    [HideInInspector] public int maxHealthStored = 5;
 
     public float damageCooldown = 1;
     public bool canTakeDamage = true;
@@ -20,34 +19,60 @@ public class playerHealth : MonoBehaviour
 
     public float healingCooldown = 1;
 
+    public bool dead = false;
+
     public AudioClip boozeGulpClip;
     public AudioSource characterInteractionSFX;
 
     public TextMeshProUGUI healthCountText;
+    public Canvas playerUI;
+    public Canvas deathScreen;
     void Start()
     {
+        deathScreen.enabled = false;
         maxHealthStored = maxHealth;
     }
 
     void Update()
     {
         healthCountText.text = health.ToString();
+        death();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("DamageDealer") && canTakeDamage)
+        if (!dead)
         {
-            StartCoroutine(takeDamage());
-        }
-        else if (collision.gameObject.CompareTag("MegaDamageDealer") && canTakeMegaDamage)
-        {
-            StartCoroutine(takeMegaDamage());
-        }
+            if (collision.gameObject.CompareTag("DamageDealer") && canTakeDamage)
+            {
+                StartCoroutine(takeDamage());
+            }
+            else if (collision.gameObject.CompareTag("MegaDamageDealer") && canTakeMegaDamage)
+            {
+                StartCoroutine(takeMegaDamage());
+            }
 
-        if (collision.gameObject.CompareTag("HealingItem") && health < maxHealth)
+            if (collision.gameObject.CompareTag("HealingItem") && health < maxHealth)
+            {
+                Destroy(collision.gameObject);
+                StartCoroutine(healing());
+            }
+        }
+    }
+
+    private void death()
+    {
+        if (health <= 0)
         {
-            Destroy(collision.gameObject);
-            StartCoroutine(healing());
+            PlayerMovementController.instance.playerAnimator.SetTrigger("characterDeath");
+            DamageRecoil();
+            PlayerMovementController.instance.speed = 0;
+            PlayerMovementController.instance.playerRB.velocity = Vector3.zero;
+            PlayerMovementController.instance.walkParticles.Stop();
+            PlayerMovementController.instance.enabled = false;
+            playerAttack.instance.enabled = false;
+            playerUI.enabled = false;
+            deathScreen.enabled = true;
+            dead = true;
         }
     }
 
@@ -67,11 +92,7 @@ public class playerHealth : MonoBehaviour
         health--;
 
         PlayerMovementController.instance.enabled = false;
-
-        Vector2 recoilForce;
-        recoilForce.x = -transform.localScale.x * hurtRecoil.x;
-        recoilForce.y = hurtRecoil.y;
-        PlayerMovementController.instance.playerRB.AddForce(recoilForce, ForceMode2D.Impulse);
+        DamageRecoil();
 
         yield return new WaitForSeconds(0.5f);
 
@@ -87,11 +108,7 @@ public class playerHealth : MonoBehaviour
         health -= 2;
 
         PlayerMovementController.instance.enabled = false;
-
-        Vector2 recoilForce;
-        recoilForce.x = -transform.localScale.x * hurtRecoil.x;
-        recoilForce.y = hurtRecoil.y;
-        PlayerMovementController.instance.playerRB.AddForce(recoilForce, ForceMode2D.Impulse);
+        DamageRecoil();
 
         yield return new WaitForSeconds(0.75f);
 
@@ -99,5 +116,13 @@ public class playerHealth : MonoBehaviour
 
         yield return new WaitForSeconds(megaDamageCooldown);
         canTakeMegaDamage = true;
+    }
+
+    void DamageRecoil()
+    {
+        Vector2 recoilForce;
+        recoilForce.x = -transform.localScale.x * hurtRecoil.x;
+        recoilForce.y = hurtRecoil.y;
+        PlayerMovementController.instance.playerRB.AddForce(recoilForce, ForceMode2D.Impulse);
     }
 }
