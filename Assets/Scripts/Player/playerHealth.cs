@@ -36,7 +36,7 @@ public class playerHealth : MonoBehaviour
     void Update()
     {
         healthCountText.text = health.ToString();
-        death();
+        StartCoroutine(death());
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -59,7 +59,7 @@ public class playerHealth : MonoBehaviour
         }
     }
 
-    private void death()
+    IEnumerator death()
     {
         if (health <= 0)
         {
@@ -71,8 +71,9 @@ public class playerHealth : MonoBehaviour
             PlayerMovementController.instance.enabled = false;
             playerAttack.instance.enabled = false;
             playerUI.enabled = false;
-            deathScreen.enabled = true;
             dead = true;
+            yield return new WaitForSeconds(2);
+            deathScreen.enabled = true;
         }
     }
 

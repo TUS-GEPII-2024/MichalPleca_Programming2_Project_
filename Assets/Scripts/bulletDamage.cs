@@ -7,7 +7,9 @@ public class bulletDamage : MonoBehaviour
     public int damage = 1;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("trigger");
-        collision.gameObject.GetComponent<enemyHealth>().health -= damage;
+        if (collision.gameObject.CompareTag("DamageDealer"))
+        {
+            collision.gameObject.GetComponent<enemyHealth>().health -= damage;
+        }
     }
 }

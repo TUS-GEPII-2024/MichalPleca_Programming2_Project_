@@ -4933,7 +4933,6 @@ GameObject:
   - component: {fileID: 6133792393172813811}
   - component: {fileID: 266231277951686778}
   - component: {fileID: 6790200728467330891}
-  - component: {fileID: 8275320761896425862}
   m_Layer: 0
   m_Name: Portal (1)
   m_TagString: Untagged
@@ -5138,33 +5137,3 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &8275320761896425862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7817885263610358178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: d5334930796174eb113254bc000000008b1b477cfb9fabfa
-  m_ShapePath:
-  - {x: -2, y: -2, z: 0}
-  - {x: -2, y: 2, z: 0}
-  - {x: 2, y: 2, z: 0}
-  - {x: 2, y: -2, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 275938
-  m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 2, y: 2, z: 0}

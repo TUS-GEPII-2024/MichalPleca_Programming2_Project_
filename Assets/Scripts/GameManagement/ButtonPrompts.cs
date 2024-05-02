@@ -7,6 +7,7 @@ public class ButtonPrompts : MonoBehaviour
     public KeyCode buttonPrompt;
     private SpriteRenderer buttonSpriteRenderer;
     public bool playerInRadius = false;
+    public bool destroyOnLeave = true;
     void Start()
     {
         buttonSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -39,7 +40,11 @@ public class ButtonPrompts : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (destroyOnLeave)
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.tag == "Player")
         {
             playerInRadius = false;
             buttonSpriteRenderer.enabled = false;
