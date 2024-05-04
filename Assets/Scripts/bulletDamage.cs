@@ -10,6 +10,7 @@ public class bulletDamage : MonoBehaviour
         if (collision.gameObject.CompareTag("DamageDealer"))
         {
             collision.gameObject.GetComponent<enemyHealth>().health -= damage;
+            Destroy(gameObject);
         }
     }
 }

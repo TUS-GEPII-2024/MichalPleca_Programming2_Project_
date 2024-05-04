@@ -18,6 +18,8 @@ public class UpgradeMenu : MonoBehaviour
     
     public playerCollectibles playerCollectibles;
 
+    public GameObject jumpUpgrade;
+
     private bool doubleJumpGot = false;
 
     void Update()
@@ -82,6 +84,7 @@ public class UpgradeMenu : MonoBehaviour
             PlayerMovementController.instance.jumpAmount = 2;
             playerCollectibles.boneCount -= 2;
             Debug.Log("double Jump Upgrade Got");
+            Destroy(jumpUpgrade);
         }
     }
 }

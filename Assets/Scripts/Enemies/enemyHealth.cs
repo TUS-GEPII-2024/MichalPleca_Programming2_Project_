@@ -14,7 +14,7 @@ public class enemyHealth : MonoBehaviour
     public AudioSource audioSource;
 
     private Animator enemyAnimator;
-    private BoxCollider2D boxCollider;
+    //private BoxCollider2D boxCollider;
     private CapsuleCollider2D capsuleCollider;
     private ShadowCaster2D shadowCaster;
     private SpriteRenderer spriteRenderer;
@@ -24,7 +24,7 @@ public class enemyHealth : MonoBehaviour
         enemyAnimator = GetComponent<Animator>();
         shadowCaster = GetComponent<ShadowCaster2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        //boxCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -40,7 +40,7 @@ public class enemyHealth : MonoBehaviour
         audioSource.enabled = false;
         shadowCaster.enabled = false;
         capsuleCollider.enabled = false;
-        boxCollider.enabled = false;
+        //boxCollider.enabled = false;
         deadCollider.SetActive(true);
         enemyAnimator.SetTrigger("enemyDead");
 

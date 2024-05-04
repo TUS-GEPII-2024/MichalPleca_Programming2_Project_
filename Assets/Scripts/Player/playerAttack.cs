@@ -22,9 +22,11 @@ public class playerAttack : MonoBehaviour
     private bool meleeOnCooldown;
     private bool rangedOnCooldown;
     private bool facingRight = true;
+    private AudioSource gunshotAudio;
 
     private void Start()
     {
+        gunshotAudio = GetComponent<AudioSource>();
         instance = this;
     }
     void Update()
@@ -81,6 +83,7 @@ public class playerAttack : MonoBehaviour
     IEnumerator rangedAttack()
     {
         rangedOnCooldown = true;
+        gunshotAudio.Play();
         GameObject rangedProjectile = Instantiate(rangedPrefab, transform.position, transform.rotation);
         Rigidbody2D rangedProjectileRB = rangedProjectile.GetComponent<Rigidbody2D>();
         if (facingRight)

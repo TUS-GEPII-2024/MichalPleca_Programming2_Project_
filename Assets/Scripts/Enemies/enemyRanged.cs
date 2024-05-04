@@ -11,6 +11,7 @@ public class enemyRanged : MonoBehaviour
     public Animator enemyAnimator;
     public enemyHealth enemyHealth;
     private CircleCollider2D playerDetectionCollider;
+    private AudioSource enemyAudio;
 
     public GameObject rangedPrefab;
     public bool rangedOnCooldown = false;
@@ -21,6 +22,7 @@ public class enemyRanged : MonoBehaviour
     private bool facingRight;
     void Start()
     {
+        enemyAudio = GetComponent<AudioSource>();
         playerDetectionCollider = GetComponent<CircleCollider2D>();
         enemyTransform = transform.parent;
     }
@@ -50,7 +52,6 @@ public class enemyRanged : MonoBehaviour
                 rangedScale.x = 1;
                 rangedPrefab.transform.localScale = rangedScale;
             }
-            enemyAnimator.SetTrigger("plantAlerted");
 
             if (!rangedOnCooldown)
             {
@@ -66,9 +67,10 @@ public class enemyRanged : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && enemyHealth.enemyDead == !true)
         {
             playerDetected = true;
+            enemyAnimator.SetBool("plantAlerted", true);
             //playerDetectionCollider.enabled = false;
         }
     }
@@ -78,12 +80,14 @@ public class enemyRanged : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerDetected = false;
+            enemyAnimator.SetBool("plantAlerted", false);
         }
     }
 
     IEnumerator rangedAttack()
     {
         rangedOnCooldown = true;
+        enemyAudio.Play();
         GameObject rangedProjectile = Instantiate(rangedPrefab, enemyTransform.position, enemyTransform.rotation);
         Rigidbody2D rangedProjectileRB = rangedProjectile.GetComponent<Rigidbody2D>();
         if (facingRight)

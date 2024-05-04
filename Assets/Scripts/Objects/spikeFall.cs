@@ -7,7 +7,6 @@ public class spikeFall : MonoBehaviour
 {
     public float fallSpeed = 10f;
     public float destoryDelay = 1f;
-    public bool playerDetected = false;
 
     private GameObject spikeGameObject;
     private Transform spikeTransform;
@@ -17,19 +16,11 @@ public class spikeFall : MonoBehaviour
         spikeTransform = transform.parent;
     }
 
-    void Update()
-    {
-        if (playerDetected)
-        {
-            StartCoroutine(spikeFallDestroy());
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            playerDetected = true;
+            StartCoroutine(spikeFallDestroy());
         }
     }
 
