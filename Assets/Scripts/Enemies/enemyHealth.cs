@@ -29,20 +29,20 @@ public class enemyHealth : MonoBehaviour
 
     void Update()
     {
-        if (health <= 0 || enemyDead)
+        if (health <= 0 && !enemyDead)
         {
             StartCoroutine(enemyDeath());
         }
     }
         IEnumerator enemyDeath()
     {
+        enemyDead = true;
         audioSource.enabled = false;
         shadowCaster.enabled = false;
         capsuleCollider.enabled = false;
         boxCollider.enabled = false;
         deadCollider.SetActive(true);
         enemyAnimator.SetTrigger("enemyDead");
-        enemyDead = true;
 
         yield return new WaitForSeconds(destroyDelay);
 

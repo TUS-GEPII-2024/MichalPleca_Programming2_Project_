@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class enemyRanged : MonoBehaviour
@@ -9,17 +10,18 @@ public class enemyRanged : MonoBehaviour
     private Transform enemyTransform;
     public Animator enemyAnimator;
     public enemyHealth enemyHealth;
-    public CircleCollider2D playerDetectionCollider;
+    private CircleCollider2D playerDetectionCollider;
 
     public GameObject rangedPrefab;
     public bool rangedOnCooldown = false;
+    public float rangedCooldownTime = 1.5f;
     public float rangedDestroyDelay = 1f;
     public float rangedProjectileForce = 5f;
 
     private bool facingRight;
-    public float enemySpeed = 1f;
     void Start()
     {
+        playerDetectionCollider = GetComponent<CircleCollider2D>();
         enemyTransform = transform.parent;
     }
     void Update()
@@ -28,7 +30,7 @@ public class enemyRanged : MonoBehaviour
         {
             Vector3 directionToPlayer = (PlayerMovementController.instance.transform.position - enemyTransform.position).normalized;
 
-            if (directionToPlayer.x < 0)
+            if (directionToPlayer.x > 0)
             {
                 enemyTransform.localScale = new Vector3(-1, 1, 1);
 
@@ -38,7 +40,7 @@ public class enemyRanged : MonoBehaviour
                 rangedScale.x = -1;
                 rangedPrefab.transform.localScale = rangedScale;
             }
-            else if (directionToPlayer.x > 0)
+            else if (directionToPlayer.x < 0)
             {
                 enemyTransform.localScale = new Vector3(1, 1, 1);
 
@@ -52,7 +54,7 @@ public class enemyRanged : MonoBehaviour
 
             if (!rangedOnCooldown)
             {
-                rangedAttack();
+                StartCoroutine(rangedAttack());
             }
         }
 
@@ -67,14 +69,22 @@ public class enemyRanged : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerDetected = true;
-            playerDetectionCollider.enabled = false;
+            //playerDetectionCollider.enabled = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerDetected = false;
         }
     }
 
     IEnumerator rangedAttack()
     {
         rangedOnCooldown = true;
-        GameObject rangedProjectile = Instantiate(rangedPrefab, transform.position, transform.rotation);
+        GameObject rangedProjectile = Instantiate(rangedPrefab, enemyTransform.position, enemyTransform.rotation);
         Rigidbody2D rangedProjectileRB = rangedProjectile.GetComponent<Rigidbody2D>();
         if (facingRight)
         {
@@ -85,7 +95,7 @@ public class enemyRanged : MonoBehaviour
             rangedProjectileRB.AddForce(Vector2.left * rangedProjectileForce, ForceMode2D.Impulse);
         }
         Destroy(rangedProjectile, rangedDestroyDelay);
-        yield return new WaitForSeconds(rangedDestroyDelay);
+        yield return new WaitForSeconds(rangedCooldownTime);
         rangedOnCooldown = false;
     }
 }
