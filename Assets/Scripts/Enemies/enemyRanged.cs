@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class enemyRanged : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class enemyRanged : MonoBehaviour
     private Transform enemyTransform;
     public Animator enemyAnimator;
     public enemyHealth enemyHealth;
+    public Light2D enemyLight;
     private CircleCollider2D playerDetectionCollider;
     private AudioSource enemyAudio;
 
@@ -62,6 +64,7 @@ public class enemyRanged : MonoBehaviour
         if (enemyHealth.enemyDead == true)
         {
             playerDetected = false;
+            enemyLight.enabled = false;
         }
     }
 
@@ -86,6 +89,7 @@ public class enemyRanged : MonoBehaviour
 
     IEnumerator rangedAttack()
     {
+        //enemy ranged attack
         rangedOnCooldown = true;
         enemyAudio.Play();
         GameObject rangedProjectile = Instantiate(rangedPrefab, enemyTransform.position, enemyTransform.rotation);

@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7741219363577631409}
   - component: {fileID: 7206718011190670199}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: plantDeathCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 6657297847030383493}
   - component: {fileID: 8146980404749681436}
   - component: {fileID: 4521735720667997912}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: plantEnemy (1)
   m_TagString: DamageDealer
   m_Icon: {fileID: 0}
@@ -189,14 +189,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7589838673538571527}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 30.783482, y: -1.4967829, z: 10.037772}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7973263708600772787}
   - {fileID: 183166809022751287}
   - {fileID: 7741219363577631409}
+  - {fileID: 7973263708600772787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &567034443146417867
@@ -385,7 +385,7 @@ MonoBehaviour:
   - {x: 0.39502716, y: -0.79730296, z: 0}
   m_ShapePathHash: -1997312843
   m_Mesh: {fileID: 0}
-  m_InstanceId: 29682
+  m_InstanceId: 445548
   m_LocalBounds:
     m_Center: {x: -0.10248661, y: -0.405128, z: 0}
     m_Extent: {x: 0.49751377, y: 0.39487195, z: 0}
@@ -438,6 +438,8 @@ MonoBehaviour:
   playerDetected: 0
   enemyAnimator: {fileID: 6859766771524980139}
   enemyHealth: {fileID: 567034443146417867}
+  enemyLight: {fileID: 1107759799683292388}
+  enemyAudio: {fileID: 0}
   rangedPrefab: {fileID: 1428310613153230868, guid: 5187c27c52ea28041a05c01332c92a42, type: 3}
   rangedOnCooldown: 0
   rangedCooldownTime: 2.5
@@ -498,10 +500,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1.6838546
+  MinDistance: 8
   MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

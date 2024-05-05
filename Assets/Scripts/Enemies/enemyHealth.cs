@@ -38,7 +38,10 @@ public class enemyHealth : MonoBehaviour
     {
         enemyDead = true;
         audioSource.enabled = false;
-        shadowCaster.enabled = false;
+        if (shadowCaster != null)
+        {
+            shadowCaster.enabled = false;
+        }
         capsuleCollider.enabled = false;
         //boxCollider.enabled = false;
         deadCollider.SetActive(true);
