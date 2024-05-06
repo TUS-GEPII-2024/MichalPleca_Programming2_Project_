@@ -10,6 +10,7 @@ public class UpgradeMenu : MonoBehaviour
     public Canvas pauseMenuUI;
     public Canvas playerHUD;
     public Canvas upgradeUI;
+    public Canvas winUI;
     public Image unavailableImage;
 
     public playerHealth playerHealth;
@@ -21,6 +22,11 @@ public class UpgradeMenu : MonoBehaviour
     public GameObject jumpUpgrade;
 
     private bool doubleJumpGot = false;
+
+    private void Start()
+    {
+        winUI.enabled = false;
+    }
 
     void Update()
     {
@@ -59,6 +65,7 @@ public class UpgradeMenu : MonoBehaviour
             if (playerCollectibles.boneCount >= 2 && doubleJumpGot)
             {
                 playerHealth.maxHealth++;
+                playerHealth.health++;
                 playerCollectibles.boneCount -= 2;
                 Debug.Log("max Health Upgrade Got");
             }

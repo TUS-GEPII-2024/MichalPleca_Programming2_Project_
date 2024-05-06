@@ -8,6 +8,7 @@ public class ButtonPrompts : MonoBehaviour
     private SpriteRenderer buttonSpriteRenderer;
     public bool playerInRadius = false;
     public bool destroyOnLeave = true;
+    public bool destroyOnButtonPress = true;
     void Start()
     {
         buttonSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -16,7 +17,7 @@ public class ButtonPrompts : MonoBehaviour
 
     private void Update()
     {
-        if (playerInRadius==true && Input.GetKeyDown(buttonPrompt))
+        if (playerInRadius==true && Input.GetKeyDown(buttonPrompt) && destroyOnButtonPress)
         {
             Destroy(gameObject);
         }
@@ -33,7 +34,7 @@ public class ButtonPrompts : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && Input.GetKeyDown(buttonPrompt))
+        if (collision.gameObject.tag == "Player" && Input.GetKeyDown(buttonPrompt) && destroyOnButtonPress)
         {
             Destroy(gameObject);
         }

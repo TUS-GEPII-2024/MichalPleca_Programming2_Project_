@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class movingPlatform : MonoBehaviour
 {
+    public bool checkVertical = false;
+    public bool checkHorizontal = true;
     private Transform platformTransform;
-    public float moveSpeed;
+    public float moveSpeed = 1f;
  
     public Transform patrolPoint1;
     public Transform patrolPoint2;
@@ -26,24 +28,43 @@ public class movingPlatform : MonoBehaviour
     {
         Vector3 directionToPoint = (currentPatrolPoint.position - platformTransform.position).normalized;
         platformTransform.position += directionToPoint * moveSpeed * Time.deltaTime;
-
-        if (platformTransform.position.x >= patrolPoint1.position.x)
+        if (checkHorizontal)
         {
-            currentPatrolPoint = patrolPoint2;
+            if (platformTransform.position.x >= patrolPoint1.position.x)
+            {
+                currentPatrolPoint = patrolPoint2;
+            }
+            else if (checkHorizontal && (platformTransform.position.x <= patrolPoint2.position.x))
+            {
+                currentPatrolPoint = patrolPoint1;
+            }
         }
-        else if (platformTransform.position.x <= patrolPoint2.position.x)
+        else if (checkVertical)
         {
-            currentPatrolPoint = patrolPoint1;
+            if (platformTransform.position.y >= patrolPoint1.position.y)
+            {
+                currentPatrolPoint = patrolPoint2;
+            }
+            else if (platformTransform.position.y <= patrolPoint2.position.y)
+            {
+                currentPatrolPoint = patrolPoint1;
+            }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.transform.SetParent(transform);
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.transform.SetParent(transform);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        collision.transform.SetParent(null);
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.transform.SetParent(null);
+        }
     }
 }
