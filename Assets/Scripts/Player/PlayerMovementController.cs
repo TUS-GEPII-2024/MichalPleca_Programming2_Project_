@@ -109,6 +109,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             //Debug.Log("Raycast hit something");
             canJump = true;
+            jumpAmountStored = jumpAmount;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
