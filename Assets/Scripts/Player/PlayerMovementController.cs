@@ -29,7 +29,8 @@ public class PlayerMovementController : MonoBehaviour
     private ShadowCaster2D shadowCaster;
     private BoxCollider2D standingCollider;
     private CapsuleCollider2D crouchCollider;
-    private bool crouching;
+
+    [HideInInspector] public bool crouching;
     void Start()
     {
         walkSoundPlay = false;

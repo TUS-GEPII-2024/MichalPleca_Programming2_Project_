@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class playerAttack : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class playerAttack : MonoBehaviour
 
     public GameObject meleePrefab;
     public GameObject rangedPrefab;
+
+    public GameObject heldPistol;
+    public Light2D muzzleFlash;
 
     public float meleeDestroyDelay = 1;
     public float rangedDestroyDelay = 2;
@@ -32,7 +36,7 @@ public class playerAttack : MonoBehaviour
     void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        if (playerHasGun)
+        if (playerHasGun && PlayerMovementController.instance.crouching == false)
         {
             if (Input.GetKeyDown(KeyCode.E) && !meleeOnCooldown || Input.GetKeyDown(KeyCode.RightShift) && !meleeOnCooldown)
             {
@@ -83,7 +87,9 @@ public class playerAttack : MonoBehaviour
     IEnumerator rangedAttack()
     {
         rangedOnCooldown = true;
+        muzzleFlash.enabled = true;
         gunshotAudio.Play();
+        heldPistol.SetActive(true);
         GameObject rangedProjectile = Instantiate(rangedPrefab, transform.position, transform.rotation);
         Rigidbody2D rangedProjectileRB = rangedProjectile.GetComponent<Rigidbody2D>();
         if (facingRight)
@@ -95,7 +101,10 @@ public class playerAttack : MonoBehaviour
             rangedProjectileRB.AddForce(Vector2.left * rangedProjectileForce, ForceMode2D.Impulse);
         }
         Destroy(rangedProjectile, rangedDestroyDelay);
+        yield return new WaitForSeconds(0.05f);
+        muzzleFlash.enabled = false;
         yield return new WaitForSeconds(rangedCooldownTime);
+        heldPistol.SetActive(false);
         rangedOnCooldown = false;
     }
 }
