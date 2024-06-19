@@ -28,6 +28,7 @@ public class gunCollectible : MonoBehaviour
     {
         gunPickupSound.Play();
         playerAttack.instance.playerHasGun = true;
+        playerAttack.instance.playerHasGunCollectible = true;
         gunPickupSpriteRenderer.enabled = false;
         gunPickupLight.enabled = false;
         gunPickupShadowCaster.enabled = false;

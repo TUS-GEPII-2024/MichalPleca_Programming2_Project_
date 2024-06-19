@@ -18,11 +18,13 @@ public class playerAttack : MonoBehaviour
     public float rangedDestroyDelay = 2;
 
     public float rangedProjectileForce = 1;
+    public int rangedDamage = 1;
 
     public float meleeCooldownTime = 0.75f;
     public float rangedCooldownTime = 0.65f;
 
     public bool playerHasGun = false;
+    public bool playerHasGunCollectible = false;
 
     private bool meleeOnCooldown;
     private bool rangedOnCooldown;

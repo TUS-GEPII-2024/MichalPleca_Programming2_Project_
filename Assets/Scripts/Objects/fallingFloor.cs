@@ -43,6 +43,7 @@ public class fallingFloor : MonoBehaviour
         floorAudioSource.Play();
         floorAnimator.SetTrigger("floorFade");
         yield return new WaitForSeconds(0.5f);
+        Destroy(floorAudioSource);
         floorShadowCaster.enabled = false;
         yield return new WaitForSeconds(1);
         Destroy(gameObject);

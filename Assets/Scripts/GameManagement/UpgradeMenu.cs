@@ -21,9 +21,11 @@ public class UpgradeMenu : MonoBehaviour
 
     public GameObject jumpUpgrade;
     public GameObject dashUpgrade;
+    public GameObject bulletDmg;
 
     private bool doubleJumpGot = false;
     private bool dashGot = false;
+    private bool bulletDmgGot = false;
 
     private void Start()
     {
@@ -44,6 +46,10 @@ public class UpgradeMenu : MonoBehaviour
 
     void pauseGame()
     {
+        if (playerAttack.instance.playerHasGunCollectible)
+        {
+            playerAttack.instance.playerHasGun = false;
+        }
         Time.timeScale = 0;
         gamePaused = true;
         upgradeUI.enabled = true;
@@ -53,6 +59,10 @@ public class UpgradeMenu : MonoBehaviour
 
     void unpauseGame()
     {
+        if (playerAttack.instance.playerHasGunCollectible)
+        {
+            playerAttack.instance.playerHasGun = true;
+        }
         Time.timeScale = 1;
         gamePaused = false;
         playerHUD.enabled = true;
@@ -106,6 +116,18 @@ public class UpgradeMenu : MonoBehaviour
             playerCollectibles.boneCount -= 3;
             Debug.Log("dash Upgrade Got");
             Destroy(dashUpgrade);
+        }
+    }
+
+    public void bulletDmgUpgrade()
+    {
+        if (playerCollectibles.boneCount >= 5 && !bulletDmgGot && doubleJumpGot)
+        {
+            bulletDmgGot = true;
+            playerAttack.instance.rangedDamage += 1;
+            playerCollectibles.boneCount -= 5;
+            Debug.Log("dmg Upgrade Got");
+            Destroy(bulletDmg);
         }
     }
 }
