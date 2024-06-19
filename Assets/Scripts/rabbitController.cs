@@ -7,7 +7,6 @@ public class rabbitController : MonoBehaviour
     [SerializeField]
     private bool playerDetected = false;
     private Transform rabbitTransform;
-    public Animator rabbitAnimator;
     public CircleCollider2D playerDetectionCollider;
 
     public float enemySpeed = 1f;
@@ -24,14 +23,12 @@ public class rabbitController : MonoBehaviour
 
             if (directionToPlayer.x < 0)
             {
-                rabbitTransform.localScale = new Vector3(-1, 1, 1);
+                rabbitTransform.localScale = new Vector3(1, 1, 1);
             }
             else if (directionToPlayer.x > 0)
             {
-                rabbitTransform.localScale = new Vector3(1, 1, 1);
+                rabbitTransform.localScale = new Vector3(-1, 1, 1);
             }
-
-            rabbitAnimator.SetBool("playerDetected", true);
         }
     }
 
