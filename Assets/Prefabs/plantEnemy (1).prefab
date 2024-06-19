@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   destroyDelay: 2
+  hurtRecoil: {x: 0.75, y: 0.25}
   enemyDead: 0
   deadCollider: {fileID: 6049510537297864449}
   audioSource: {fileID: 2675075178947947009}
@@ -385,7 +386,7 @@ MonoBehaviour:
   - {x: 0.39502716, y: -0.79730296, z: 0}
   m_ShapePathHash: -1997312843
   m_Mesh: {fileID: 0}
-  m_InstanceId: 445548
+  m_InstanceId: 76840
   m_LocalBounds:
     m_Center: {x: -0.10248661, y: -0.405128, z: 0}
     m_Extent: {x: 0.49751377, y: 0.39487195, z: 0}
@@ -439,7 +440,6 @@ MonoBehaviour:
   enemyAnimator: {fileID: 6859766771524980139}
   enemyHealth: {fileID: 567034443146417867}
   enemyLight: {fileID: 1107759799683292388}
-  enemyAudio: {fileID: 0}
   rangedPrefab: {fileID: 1428310613153230868, guid: 5187c27c52ea28041a05c01332c92a42, type: 3}
   rangedOnCooldown: 0
   rangedCooldownTime: 2.5

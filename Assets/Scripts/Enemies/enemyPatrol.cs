@@ -32,7 +32,7 @@ public class enemyPatrol : MonoBehaviour
             navigationToPoints();
         }
 
-        if (enemyHealth.enemyDead == true)
+        if (enemyHealth.enemyDead == true || playerHealth.instance.dead == true)
         {
             playerDetected = false;
         }

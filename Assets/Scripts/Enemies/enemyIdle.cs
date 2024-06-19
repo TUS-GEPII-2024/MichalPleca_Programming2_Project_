@@ -6,10 +6,12 @@ public class enemyIdle : MonoBehaviour
 {
     [SerializeField]
     private bool playerDetected = false;
+    private bool spawnLight = true;
     private Transform enemyTransform;
     public Animator enemyAnimator;
     public enemyHealth enemyHealth;
     public CircleCollider2D playerDetectionCollider;
+    public GameObject lightPrefab;
 
     public float enemySpeed = 1f;
     void Start()
@@ -35,10 +37,22 @@ public class enemyIdle : MonoBehaviour
             enemyAnimator.SetBool("playerDetected", true);
         }
 
-        if(enemyHealth.enemyDead == true)
+        if(enemyHealth.enemyDead == true || playerHealth.instance.dead == true)
         {
             playerDetected = false;
+            if (enemyHealth.enemyDead == true && spawnLight)
+            {
+                StartCoroutine(enemyDead());
+            }
         }
+    }
+
+    IEnumerator enemyDead()
+    {
+        spawnLight = false;
+        GameObject fireLight = Instantiate(lightPrefab, transform.position, transform.rotation);
+        yield return new WaitForSeconds(enemyHealth.destroyDelay - 1);
+        Destroy(fireLight);
     }
 
   // private void OnCollisionEnter2D(Collision2D collision)

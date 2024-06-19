@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4879107016035004936}
   - component: {fileID: 404236464577475198}
   - component: {fileID: 6660608724801100904}
+  - component: {fileID: 4929330989270214508}
   m_Layer: 0
   m_Name: rangedEnemyProjectile (1)
   m_TagString: DamageDealer
@@ -158,3 +159,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.33305264, y: 0.33100748}
   m_EdgeRadius: 0
+--- !u!114 &4929330989270214508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428310613153230868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: d5334930796174eb113254bc000000008b1b477c8b28707bfb9fabfa
+  m_ShapePath:
+  - {x: -0.05928707, y: -0.18401098, z: 0}
+  - {x: -0.05985737, y: -0.06015587, z: 0}
+  - {x: -0.18410397, y: -0.059070587, z: 0}
+  - {x: -0.18587208, y: 0.122935295, z: 0}
+  - {x: -0.12116432, y: 0.12268543, z: 0}
+  - {x: -0.1222496, y: 0.18399477, z: 0}
+  - {x: 0.12081814, y: 0.18236732, z: 0}
+  - {x: 0.1202755, y: 0.119972706, z: 0}
+  - {x: 0.18592548, y: 0.119972706, z: 0}
+  - {x: 0.18549728, y: 0.0072493553, z: 0}
+  - {x: 0.05844879, y: 0.0034189224, z: 0}
+  - {x: 0.05531597, y: -0.18549728, z: 0}
+  m_ShapePathHash: -845157771
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -2855538
+  m_LocalBounds:
+    m_Center: {x: 0.00002670288, y: -0.00075125694, z: 0}
+    m_Extent: {x: 0.18589878, y: 0.18474603, z: 0}

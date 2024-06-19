@@ -5,6 +5,7 @@ using TMPro;
 
 public class playerHealth : MonoBehaviour
 {
+    public static playerHealth instance;
     public int health = 4;
     public int maxHealth = 5;
     [HideInInspector] public int maxHealthStored = 5;
@@ -29,6 +30,7 @@ public class playerHealth : MonoBehaviour
     public Canvas deathScreen;
     void Start()
     {
+        instance = this;
         deathScreen.enabled = false;
         maxHealthStored = maxHealth;
     }

@@ -126,7 +126,8 @@ MonoBehaviour:
   enemyAnimator: {fileID: 8150409831819176516}
   enemyHealth: {fileID: 3117922991697918004}
   playerDetectionCollider: {fileID: 7478651761016677603}
-  enemySpeed: 1
+  lightPrefab: {fileID: 1835928571246334495, guid: 1570561e02637fd47a682bd4e18c380a, type: 3}
+  enemySpeed: 1.1
 --- !u!58 &7478651761016677603
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -174,7 +175,6 @@ GameObject:
   - component: {fileID: 3117922991697918004}
   - component: {fileID: 1895716521335461455}
   - component: {fileID: 6557071190228027954}
-  - component: {fileID: 6476012867780781694}
   - component: {fileID: 8150409831819176516}
   - component: {fileID: 993079478407178775}
   - component: {fileID: 4118909048354352223}
@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   destroyDelay: 2
+  hurtRecoil: {x: 9, y: 6}
   enemyDead: 0
   deadCollider: {fileID: 1933634500023555802}
   audioSource: {fileID: 3777243843908916676}
@@ -280,7 +281,7 @@ CapsuleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3859280923122871552}
   m_Enabled: 1
-  m_Density: 1
+  m_Density: 3
   m_Material: {fileID: 6200000, guid: c26fd6b7f8ba42e49902f667da28e67e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -307,51 +308,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.021207333, y: 0}
   m_Size: {x: 0.7709513, y: 2}
   m_Direction: 0
---- !u!61 &6476012867780781694
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3859280923122871552}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: c26fd6b7f8ba42e49902f667da28e67e, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.024406433, y: -0.22939861}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5904846, y: 1.5147407}
-  m_EdgeRadius: 0
 --- !u!95 &8150409831819176516
 Animator:
   serializedVersion: 5
@@ -384,10 +340,10 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 0.96733767
-  m_LinearDrag: 15
-  m_AngularDrag: 15
+  m_UseAutoMass: 0
+  m_Mass: 0.98
+  m_LinearDrag: 5
+  m_AngularDrag: 5
   m_GravityScale: 2
   m_Material: {fileID: 6200000, guid: c26fd6b7f8ba42e49902f667da28e67e, type: 2}
   m_IncludeLayers:
@@ -480,7 +436,7 @@ MonoBehaviour:
   - {x: -0.06641388, y: -0.99808645, z: 0}
   m_ShapePathHash: 968689543
   m_Mesh: {fileID: 0}
-  m_InstanceId: 182764
+  m_InstanceId: 1183258
   m_LocalBounds:
     m_Center: {x: 0.029517174, y: -0.030411243, z: 0}
     m_Extent: {x: 0.46391582, y: 0.9676752, z: 0}

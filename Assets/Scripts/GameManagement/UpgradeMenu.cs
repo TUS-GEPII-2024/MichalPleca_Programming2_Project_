@@ -20,8 +20,10 @@ public class UpgradeMenu : MonoBehaviour
     public playerCollectibles playerCollectibles;
 
     public GameObject jumpUpgrade;
+    public GameObject dashUpgrade;
 
     private bool doubleJumpGot = false;
+    private bool dashGot = false;
 
     private void Start()
     {
@@ -92,6 +94,18 @@ public class UpgradeMenu : MonoBehaviour
             playerCollectibles.boneCount -= 2;
             Debug.Log("double Jump Upgrade Got");
             Destroy(jumpUpgrade);
+        }
+    }
+
+    public void getDashUpgrade()
+    {
+        if (playerCollectibles.boneCount >= 3 && !dashGot && doubleJumpGot)
+        {
+            dashGot = true;
+            PlayerMovementController.instance.dashEnabled = true;
+            playerCollectibles.boneCount -= 3;
+            Debug.Log("dash Upgrade Got");
+            Destroy(dashUpgrade);
         }
     }
 }

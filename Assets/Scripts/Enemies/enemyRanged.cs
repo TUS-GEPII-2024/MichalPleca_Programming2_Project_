@@ -61,7 +61,7 @@ public class enemyRanged : MonoBehaviour
             }
         }
 
-        if (enemyHealth.enemyDead == true)
+        if (enemyHealth.enemyDead == true || playerHealth.instance.dead == true)
         {
             playerDetected = false;
             enemyLight.enabled = false;

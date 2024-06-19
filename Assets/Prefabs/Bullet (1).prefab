@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6025215133745853521}
   - component: {fileID: 733843718588477934}
   - component: {fileID: -687102631643169560}
+  - component: {fileID: 7200188689297042829}
   m_Layer: 0
   m_Name: Bullet (1)
   m_TagString: Bullet
@@ -284,7 +285,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.25
+      scalar: 0.75
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1038,7 +1039,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 35
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5027,3 +5028,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.44684756, y: 0.105384946}
   m_EdgeRadius: 0
+--- !u!114 &7200188689297042829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5794810016771418893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: d5334930796174eb113254bc000000008b1b477c8b28707bfb9fabfa
+  m_ShapePath:
+  - {x: -0.06926487, y: -0.03416878, z: 0}
+  - {x: -0.06926487, y: 0.034168784, z: 0}
+  - {x: 0.045095153, y: 0.034125976, z: 0}
+  - {x: 0.04531183, y: 0.009627957, z: 0}
+  - {x: 0.06967473, y: 0.009318853, z: 0}
+  - {x: 0.06967473, y: -0.009311626, z: 0}
+  - {x: 0.045396134, y: -0.009311626, z: 0}
+  - {x: 0.045267284, y: -0.03355058, z: 0}
+  m_ShapePathHash: -348666181
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 1629654
+  m_LocalBounds:
+    m_Center: {x: 0.00020492822, y: 0, z: 0}
+    m_Extent: {x: 0.069469795, y: 0.03416878, z: 0}

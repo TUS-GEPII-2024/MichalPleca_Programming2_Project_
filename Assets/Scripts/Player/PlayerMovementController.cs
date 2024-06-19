@@ -6,6 +6,8 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    //Player flipping is located in playerAttack script in mouseRotation function in order to work with aiming with the mouse.
+
     public static PlayerMovementController instance;
     [HideInInspector] public Rigidbody2D playerRB;
     private LayerMask raycastLayerMask;
@@ -20,7 +22,14 @@ public class PlayerMovementController : MonoBehaviour
     public float jumpAmount = 1;
     [HideInInspector] public float jumpAmountStored;
 
+    public bool dashEnabled = false;
+    public Vector2 dashDistance;
+    public float dashCooldown = 4f;
+    public float dashInputCooldown = 0.25f;
+    private bool dashOnCooldown = false;
+
     public ParticleSystem walkParticles;
+    public ParticleSystem dashParticles;
     [HideInInspector] public Animator playerAnimator;
 
     private AudioSource walkSound;
@@ -55,11 +64,34 @@ public class PlayerMovementController : MonoBehaviour
             walk();
             jump();
             crouch();
+            startDash();
         }
-        else if (!isInputEnabled)
+    }
+
+    void startDash()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && dashOnCooldown == false && dashEnabled)
         {
-            playerRB.velocity = Vector3.zero;
+            StartCoroutine(dash());
         }
+    }
+
+    IEnumerator dash()
+    {
+        dashOnCooldown = true;
+        isInputEnabled = false;
+
+        Vector2 dashForce;
+        dashForce.x = playerRB.velocity.x * dashDistance.x;
+        dashForce.y = dashDistance.y;
+        playerRB.AddForce(dashForce, ForceMode2D.Impulse);
+        dashParticles.Play();
+
+        yield return new WaitForSeconds(dashInputCooldown);
+        isInputEnabled = true;
+
+        yield return new WaitForSeconds(dashCooldown);
+        dashOnCooldown = false;
     }
 
     private void crouch()
@@ -131,9 +163,7 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     private void walk()
-    {
-        Vector2 playableCharacterScale = transform.localScale;
-
+    {   
         //gets horizontal input, then multiplies that by the speed variable
         float horizontalMovement = Input.GetAxis("Horizontal") * speed;
 
@@ -158,8 +188,6 @@ public class PlayerMovementController : MonoBehaviour
                     StartCoroutine(playWalkSound());
                 }
             }
-
-            playableCharacterScale.x = 1;
         }
         else if (Input.GetKey(KeyCode.A))
         {
@@ -172,8 +200,6 @@ public class PlayerMovementController : MonoBehaviour
                     StartCoroutine(playWalkSound());
                 }
             }
-
-            playableCharacterScale.x = -1;
         }
         else
         {
@@ -181,7 +207,6 @@ public class PlayerMovementController : MonoBehaviour
             walkParticles.Stop();
             walkSound.Stop();
         }
-        transform.localScale = playableCharacterScale;
     }
 
     IEnumerator playWalkSound()

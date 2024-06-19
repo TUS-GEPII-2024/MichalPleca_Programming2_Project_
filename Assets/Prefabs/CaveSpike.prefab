@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 7850875669949634655}
   - component: {fileID: 5320423243867819958}
   - component: {fileID: 6482792963810927085}
+  - component: {fileID: 7096825194388671612}
   m_Layer: 0
   m_Name: CaveSpike
   m_TagString: DamageDealer
@@ -213,3 +214,49 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0017362323, y: 0.051985607}
   m_Size: {x: 0.75335586, y: 1.8960297}
   m_Direction: 0
+--- !u!114 &7096825194388671612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173566640372154942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: d5334930796174eb113254bc000000008b1b477c8b28707bfb9fabfa
+  m_ShapePath:
+  - {x: -0.05575845, y: -0.6214176, z: -3.3158987e-10}
+  - {x: -0.17945284, y: -0.6197532, z: -0.000000027781098}
+  - {x: -0.18092734, y: -0.12037414, z: -0.000000027781098}
+  - {x: -0.3031927, y: -0.11890147, z: -0.000000027781098}
+  - {x: -0.30466545, y: 0.25820446, z: -0.000000027781098}
+  - {x: -0.42840394, y: 0.25967112, z: -0.000000027781098}
+  - {x: -0.42987698, y: 0.6294157, z: -0.000000027781098}
+  - {x: -0.5550898, y: 0.62941164, z: -0.000000027781098}
+  - {x: -0.5625, y: 0.99999905, z: 0}
+  - {x: 0.5625, y: 0.99999905, z: 0}
+  - {x: 0.55708474, y: 0.7590421, z: -0.000000027781098}
+  - {x: 0.4333455, y: 0.7590421, z: -0.000000027781098}
+  - {x: 0.4289266, y: 0.5071466, z: -0.000000027781098}
+  - {x: 0.30371428, y: 0.510093, z: -0.000000027781098}
+  - {x: 0.3037153, y: 0.13593337, z: -0.000000027781098}
+  - {x: 0.17850299, y: 0.13445969, z: -0.000000027781098}
+  - {x: 0.17850463, y: -0.36786166, z: -0.000000027781098}
+  - {x: 0.050346732, y: -0.36786166, z: -0.000000027781098}
+  - {x: 0.056239687, y: -0.99244606, z: -0.000000027781098}
+  - {x: -0.05472296, y: -0.99263483, z: -3.3158987e-10}
+  m_ShapePathHash: -750219367
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -3216802
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0.003682077, z: 0}
+    m_Extent: {x: 0.5625, y: 0.9963169, z: 0}
