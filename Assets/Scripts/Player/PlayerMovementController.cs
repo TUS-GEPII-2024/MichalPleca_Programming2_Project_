@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -24,9 +25,12 @@ public class PlayerMovementController : MonoBehaviour
 
     public bool dashEnabled = false;
     public Vector2 dashDistance;
+
     public float dashCooldown = 4f;
     public float dashInputCooldown = 0.25f;
+
     private bool dashOnCooldown = false;
+    private bool dashTimerOnCooldown = false;
 
     public ParticleSystem walkParticles;
     public ParticleSystem dashParticles;
@@ -38,6 +42,9 @@ public class PlayerMovementController : MonoBehaviour
     private ShadowCaster2D shadowCaster;
     private BoxCollider2D standingCollider;
     private CapsuleCollider2D crouchCollider;
+
+    public TextMeshProUGUI dashCooldownText;
+    private int dashCooldownTimer = 0;
 
     [HideInInspector] public bool crouching;
     void Start()
@@ -65,6 +72,7 @@ public class PlayerMovementController : MonoBehaviour
             jump();
             crouch();
             startDash();
+            dashCooldownText.text = dashCooldownTimer.ToString();
         }
     }
 
@@ -73,6 +81,10 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && dashOnCooldown == false && dashEnabled)
         {
             StartCoroutine(dash());
+        }
+        else if (dashOnCooldown == true && dashTimerOnCooldown == false)
+        {
+            StartCoroutine(dashTimer());
         }
     }
 
@@ -92,6 +104,23 @@ public class PlayerMovementController : MonoBehaviour
 
         yield return new WaitForSeconds(dashCooldown);
         dashOnCooldown = false;
+    }
+
+    IEnumerator dashTimer()
+    {
+        dashTimerOnCooldown = true;
+        dashCooldownTimer = 5;
+        yield return new WaitForSeconds(1);
+        dashCooldownTimer = 4;
+        yield return new WaitForSeconds(1);
+        dashCooldownTimer = 3;
+        yield return new WaitForSeconds(1);
+        dashCooldownTimer = 2;
+        yield return new WaitForSeconds(1);
+        dashCooldownTimer = 1;
+        yield return new WaitForSeconds(1);
+        dashCooldownTimer = 0;
+        dashTimerOnCooldown = false;
     }
 
     private void crouch()

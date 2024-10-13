@@ -45,15 +45,6 @@ public class enemyHealth : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            health -= playerAttack.instance.rangedDamage;
-            Destroy(collision.gameObject);
-        }
-    }
-
     void damageKnockback()
     {
         Vector2 recoilForce;

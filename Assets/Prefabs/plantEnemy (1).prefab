@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a915770e9c80f4589bfd1a7a5d464d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 3
   destroyDelay: 2
   hurtRecoil: {x: 0.75, y: 0.25}
   enemyDead: 0
@@ -386,7 +386,7 @@ MonoBehaviour:
   - {x: 0.39502716, y: -0.79730296, z: 0}
   m_ShapePathHash: -1997312843
   m_Mesh: {fileID: 0}
-  m_InstanceId: 76840
+  m_InstanceId: 182698
   m_LocalBounds:
     m_Center: {x: -0.10248661, y: -0.405128, z: 0}
     m_Extent: {x: 0.49751377, y: 0.39487195, z: 0}

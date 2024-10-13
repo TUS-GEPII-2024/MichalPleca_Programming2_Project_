@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a915770e9c80f4589bfd1a7a5d464d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 2
   destroyDelay: 2
   hurtRecoil: {x: 0, y: 0}
   enemyDead: 0
